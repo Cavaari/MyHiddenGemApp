@@ -3,7 +3,6 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
 import { useSession } from '../../providers/ctx';  // Import the SessionProvider from your context file
-import { Slot } from 'expo-router';
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
@@ -17,5 +16,12 @@ export default function AppLayout() {
   if (!session) {
     return <Redirect href="../sign-in" />;
   }
-  return <Stack />;
+
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false, // This removes the header from all screens in the stack
+      }}
+    />
+  );
 }

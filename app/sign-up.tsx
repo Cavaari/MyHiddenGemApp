@@ -1,10 +1,15 @@
 // app/screens/SignupScreen.tsx
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
+import { router } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 
 const SignupScreen = () => {
+
+  const handleGoToSignIn = () => {
+    router.push('/sign-in'); // Adjust the path according to your setup
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={require('@/assets/images/gem-logo.png')} style={styles.logo} />
@@ -24,7 +29,7 @@ const SignupScreen = () => {
         <Text style={styles.buttonText}>SIGN UP</Text>
       </TouchableOpacity>
       <Text style={styles.loginText}>
-        Already a user? <Text style={styles.loginLink}>LOGIN</Text>
+      Already a user? <Text style={styles.loginLink} onPress={handleGoToSignIn}>SIGN IN</Text>
       </Text>
     </ScrollView>
   );
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFA500',
+    backgroundColor: '#FF7B00',
     height: height,
   },
   logo: {
