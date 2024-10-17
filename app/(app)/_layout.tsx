@@ -9,12 +9,12 @@ export default function AppLayout() {
   const { session, isLoading } = useSession();
 
   if (isLoading) {
-    return <Text>Loading...</Text>; // Show loading indicator while checking session
+    return <Text>Loading...</Text>; // Loader while checking session
   }
 
   // Redirect to sign-in if not authenticated
   if (!session) {
-    return <Redirect href="/sign-in" />; // Adjust path to be relative to your sign-in route
+    return <Redirect href="/sign-in" />; 
   }
 
   return (

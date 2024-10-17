@@ -15,7 +15,7 @@ export default function Index() {
     }
   }, [session]);
 
-  // Start the fade-out and navigate to Home after 5 seconds
+  // Fade-out after 3 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       Animated.timing(fadeAnim, {
@@ -23,7 +23,7 @@ export default function Index() {
         duration: 1000, // Duration of fade-out (1 second)
         useNativeDriver: true,
       }).start(() => {
-        router.replace('/home'); // Navigate to Home after fade-out
+        router.replace('/home'); 
       });
     }, 3000); // Wait for 3 seconds before starting the fade-out
 
@@ -37,7 +37,7 @@ export default function Index() {
   );
 }
 
-// Styling for the welcome screen
+// Welcome screen styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

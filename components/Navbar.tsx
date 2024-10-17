@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    backgroundColor: '#FF7B00', // Customize the navbar background color
+    backgroundColor: '#FF7B00', 
   },
   icon: {
     fontSize: 24,

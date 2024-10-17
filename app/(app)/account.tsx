@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSession } from '../../providers/ctx'; // Import the session provider
 
 const AccountScreen = () => {
-  const { signOut } = useSession(); // Destructure signOut from the session context
+  const { signOut } = useSession(); // Sign out from session
 
   return (
     <View style={styles.container}>
@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    marginBottom: 20, // Add some spacing below the text
+    marginBottom: 20, 
   },
   signOutButton: {
-    backgroundColor: '#00BFFF', // Same color as your welcome screen for consistency
+    backgroundColor: '#00BFFF', 
     padding: 15,
     borderRadius: 5,
   },
