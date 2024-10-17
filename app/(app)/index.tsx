@@ -25,7 +25,7 @@ export default function Index() {
       }).start(() => {
         router.replace('/home'); // Navigate to Home after fade-out
       });
-    }, 5000); // Wait for 5 seconds before starting the fade-out
+    }, 3000); // Wait for 3 seconds before starting the fade-out
 
     return () => clearTimeout(timer); // Clear timeout if the component unmounts
   }, [fadeAnim]);
