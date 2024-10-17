@@ -1,7 +1,7 @@
 import React, { useContext, createContext, PropsWithChildren, useEffect, useState } from 'react';
-import { auth } from '../config/firebase'; // Import your Firebase auth object
+import { auth } from '../config/firebase'; 
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut } from 'firebase/auth'; // Firebase methods
-import { useStorageState } from '../hooks/useStorageState'; // Custom hook for storage
+import { useStorageState } from '../hooks/useStorageState'; // Custom storage hook
 
 const AuthContext = createContext<{
   signIn: (email: string, password: string) => Promise<void>;
@@ -15,7 +15,7 @@ const AuthContext = createContext<{
   isLoading: false,
 });
 
-// This hook can be used to access the user info.
+// User info access hook
 export function useSession() {
   const value = useContext(AuthContext);
   if (process.env.NODE_ENV !== 'production') {
@@ -34,7 +34,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setSessionState(currentUser.uid); // Store user ID or another identifier
+        setSessionState(currentUser.uid); // Store user ID 
         setSession(currentUser.uid); // Sync with storage
       } else {
         setSessionState(null);

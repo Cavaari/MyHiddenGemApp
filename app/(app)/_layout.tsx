@@ -2,12 +2,11 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
-import { useSession } from '../../providers/ctx';  // Import the SessionProvider from your context file
+import { useSession } from '../../providers/ctx';  // Import the SessionProvider
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
 
-  // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
@@ -20,7 +19,7 @@ export default function AppLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false, // This removes the header from all screens in the stack
+        headerShown: false, // removes the header from all screens in the stack
       }}
     />
   );

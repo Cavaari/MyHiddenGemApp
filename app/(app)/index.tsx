@@ -1,58 +1,39 @@
 import React, { useEffect, useRef } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { Text, View, StyleSheet, Animated } from 'react-native';
 import { useSession } from '../../providers/ctx';
-import { router } from 'expo-router'; // Import the router for navigation
+import { router } from 'expo-router'; 
+import { auth } from '../../config/firebase';
 
 export default function Index() {
-  const { session, signOut } = useSession(); // Assuming `session` holds the current user's email
-
-  // Animated value for glow effect
-  const glowAnim = useRef(new Animated.Value(0)).current;
+  const { session } = useSession(); 
+  const fadeAnim = useRef(new Animated.Value(1)).current; // Initial opacity is 1
 
   useEffect(() => {
     if (!session) {
       // If the user is not logged in, redirect to the sign-in screen
-      router.replace('/sign-in'); // Adjust to your sign-in route
+      router.replace('/sign-in');
     }
   }, [session]);
 
+  // Start the fade-out and navigate to Home after 5 seconds
   useEffect(() => {
-    // Create a glow effect by animating the opacity in a loop
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(glowAnim, {
-          toValue: 1,
-          duration: 1500, // How long the glow takes
-          useNativeDriver: true, // Optimize animation performance
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 0,
-          duration: 1500,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, [glowAnim]);
+    const timer = setTimeout(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 0, // Fade to opacity 0
+        duration: 1000, // Duration of fade-out (1 second)
+        useNativeDriver: true,
+      }).start(() => {
+        router.replace('/home'); // Navigate to Home after fade-out
+      });
+    }, 5000); // Wait for 5 seconds before starting the fade-out
 
-  // Extract the email ID (everything before the '@' symbol)
-  const userEmail = session ? session.split('@')[0] : '';
+    return () => clearTimeout(timer); // Clear timeout if the component unmounts
+  }, [fadeAnim]);
 
   return (
-    <View style={styles.container}>
-      <Animated.Text // Use Animated.Text to animate the welcomeText
-        style={[
-          styles.welcomeText,
-          {
-            opacity: glowAnim, // Bind opacity to the animated value
-          },
-        ]}
-      >
-        Welcome{userEmail ? `, ${userEmail}` : ''}!
-      </Animated.Text>
-      <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
-    </View>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <Text style={styles.welcomeText}>Welcome {auth.currentUser?.email}!</Text>
+    </Animated.View>
   );
 }
 
@@ -62,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FF7B00', // Background color
+    backgroundColor: '#FF7B00', 
     padding: 20,
   },
   welcomeText: {
@@ -70,14 +51,5 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
-  },
-  signOutButton: {
-    backgroundColor: '#00BFFF', // Button color
-    padding: 15,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });

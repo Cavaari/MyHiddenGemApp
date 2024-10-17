@@ -1,9 +1,9 @@
 // app/SignInScreen.tsx
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native';
-import { router } from 'expo-router'; // Import router for navigation
-import { auth } from '../config/firebase'; // Import the Firebase auth object
-import { signInWithEmailAndPassword } from "firebase/auth"; // Firebase sign-in method
+import { router } from 'expo-router'; 
+import { auth } from '../config/firebase'; 
+import { signInWithEmailAndPassword } from "firebase/auth"; 
 
 const { width } = Dimensions.get('window');
 
@@ -15,10 +15,10 @@ const SignInScreen = () => {
   const handleSignIn = async () => {
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password); // Sign in using Firebase
+      await signInWithEmailAndPassword(auth, email, password); 
       router.replace('/'); // Navigate to home screen after sign-in
     } catch (error) {
-      Alert.alert("Sign In Error", (error as any).message); // Show error alert on failure
+      Alert.alert("Sign In Error", (error as any).message); 
     } finally {
       setLoading(false);
     }
@@ -59,9 +59,11 @@ const SignInScreen = () => {
         <Text style={styles.buttonText}>{loading ? 'Signing In...' : 'SIGN IN'}</Text>
       </TouchableOpacity>
 
-      {/* Button to navigate to the Sign-Up screen */}
+      {/* Sign-Up screen link */}
       <TouchableOpacity onPress={handleGoToSignUp}>
-        <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+        <Text style={styles.signupText}>
+          Don't have an account? <Text style={styles.signupLink}>Sign Up</Text>
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -100,9 +102,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    fontSize: 18,
   },
   disabledButton: {
-    backgroundColor: '#87CEEB', // Lighter color when disabled
+    backgroundColor: '#87CEEB', 
   },
   logo: {
     width: width * 0.5,
@@ -111,9 +114,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signupText: {
-    color: '#edf3f5', // Color for the sign-up link
-    marginTop: 20, // Space above the text
-    textAlign: 'center', // Center the text
+    color: '#fff', 
+    marginTop: 20, 
+    textAlign: 'center', 
+  },
+  signupLink: {
+    color: '#00BFFF', 
   },
 });
 
