@@ -18,7 +18,7 @@ const MapScreen = () => {
         showsMyLocationButton={true}
         rotateEnabled={false}
         maxDelta={0.5} // Island Zoom Out limit
-        minDelta={0.1} 
+        minDelta={0.001} 
       >
         <Markers />
       </MapView>

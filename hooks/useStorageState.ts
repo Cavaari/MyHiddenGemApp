@@ -3,6 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import { firebase, firestore, auth } from '../config/firebase';
 import { useNetworkStatus } from './useNetworkStatus';
+import { setDoc, doc } from 'firebase/firestore';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
@@ -38,14 +39,14 @@ export async function setStorageItemAsync(key: string, value: string | null) {
 async function syncWithFirebase(key: string, value: string | null) {
   if (!value) return;
   try {
-    const userId = firebase.auth().currentUser?.uid;
+    const userId = auth.currentUser?.uid; // Get current user ID
+    console.log('User ID:', userId); // Debug log
     if (userId) {
-      await firebase.firestore().collection('userData').doc(userId).set(
-        {
-          [key]: value,
-        },
-        { merge: true }
-      );
+      console.log('Attempting to set document in Firestore...');
+      await setDoc(doc(firestore, 'userData', userId), {
+        [key]: value,
+      }, { merge: true });
+      console.log('Document successfully written!');
     }
   } catch (error) {
     console.error('Failed to sync with Firebase:', error);
