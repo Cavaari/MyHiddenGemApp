@@ -62,23 +62,23 @@ const SignupScreen = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {/* Security Question Dropdown */}
-      <DropDownPicker
-        open={open} // Controlled open state
-        value={securityQuestion}
-        items={securityQuestions}
-        setOpen={setOpen} // Function to open/close the dropdown
-        setValue={setSecurityQuestion} // Function to set the selected value
-        containerStyle={{ height: 50, marginBottom: 15 }}
-        style={styles.dropdown}
-      />
-      {/* Security Answer Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Answer"
-        placeholderTextColor="#aaa"
-        value={securityAnswer}
-        onChangeText={setSecurityAnswer}
+      {/* Security Question Dropdown */} 
+      <DropDownPicker 
+        open={open} // Controlled open state 
+        value={securityQuestion} 
+        items={securityQuestions} 
+        setOpen={setOpen}  // Function to open/close the dropdown
+        setValue={setSecurityQuestion}  // Function to set the selected value
+        containerStyle={{ height: 50, marginBottom: 15 }} 
+        style={styles.dropdown} 
+      /> 
+      {/* Security Answer Input */} 
+      <TextInput 
+        style={styles.input} 
+        placeholder="Answer" 
+        placeholderTextColor="#aaa" 
+        value={securityAnswer} 
+        onChangeText={setSecurityAnswer} 
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   dropdown: {
-    backgroundColor: '#f0f0f0',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
+    backgroundColor: '#f0f0f0', 
+    borderColor: '#ccc', 
+    borderWidth: 1, 
+    borderRadius: 5, 
   },
   button: {
     width: '100%',
