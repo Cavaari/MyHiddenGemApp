@@ -1,6 +1,8 @@
-import  { useEffect, useCallback, useReducer } from 'react';
+import { useEffect, useCallback, useReducer } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import { firebase, firestore, auth } from '../config/firebase';
+import { useNetworkStatus } from './useNetworkStatus';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
@@ -33,34 +35,59 @@ export async function setStorageItemAsync(key: string, value: string | null) {
   }
 }
 
-export function useStorageState(key: string): UseStateHook<string> {
-  // Public
-  const [state, setState] = useAsyncState<string>();
-
-  // Get
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      try {
-        if (typeof localStorage !== 'undefined') {
-          setState(localStorage.getItem(key));
-        }
-      } catch (e) {
-        console.error('Local storage is unavailable:', e);
-      }
-    } else {
-      SecureStore.getItemAsync(key).then(value => {
-        setState(value);
-      });
+async function syncWithFirebase(key: string, value: string | null) {
+  if (!value) return;
+  try {
+    const userId = firebase.auth().currentUser?.uid;
+    if (userId) {
+      await firebase.firestore().collection('userData').doc(userId).set(
+        {
+          [key]: value,
+        },
+        { merge: true }
+      );
     }
+  } catch (error) {
+    console.error('Failed to sync with Firebase:', error);
+  }
+}
+
+export function useStorageState(key: string): UseStateHook<string> {
+  const [state, setState] = useAsyncState<string>();
+  const isConnected = useNetworkStatus();
+
+  useEffect(() => {
+    async function loadData() {
+      if (Platform.OS === 'web') {
+        try {
+          const localValue = localStorage.getItem(key);
+          setState(localValue);
+        } catch (e) {
+          console.error('Local storage is unavailable:', e);
+        }
+      } else {
+        const secureValue = await SecureStore.getItemAsync(key);
+        setState(secureValue);
+      }
+    }
+    loadData();
   }, [key]);
 
-  // Set
+  useEffect(() => {
+    if (isConnected && state[1]) {
+      syncWithFirebase(key, state[1]); // Sync when connection is restored
+    }
+  }, [isConnected, key, state]);
+
   const setValue = useCallback(
     (value: string | null) => {
       setState(value);
       setStorageItemAsync(key, value);
+      if (isConnected) {
+        syncWithFirebase(key, value); // Immediate sync if online
+      }
     },
-    [key]
+    [isConnected, key]
   );
 
   return [state, setValue];
