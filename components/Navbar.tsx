@@ -1,7 +1,7 @@
-// components/Navbar.tsx
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome icons
 
 export default function Navbar() {
   const router = useRouter();
@@ -9,16 +9,16 @@ export default function Navbar() {
   return (
     <View style={styles.navbar}>
       <TouchableOpacity onPress={() => router.push('/home')}>
-        <Text style={styles.icon}>🏠</Text>
+        <FontAwesome name="home" style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/favourites')}>
-        <Text style={styles.icon}>❤️</Text>
+        <FontAwesome name="heart" style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/maps')}>
-        <Text style={styles.icon}>📍</Text>
+        <FontAwesome name="map-marker" style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/account')}>
-        <Text style={styles.icon}>👤</Text>
+        <FontAwesome name="user" style={styles.icon} />
       </TouchableOpacity>
     </View>
   );
@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 10,
+    padding: 16,
     backgroundColor: '#FF7B00', 
   },
   icon: {
-    fontSize: 24,
-    color: '#fff',
+    fontSize: 32,
+    color: '#fff', 
   },
 });

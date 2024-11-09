@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import Markers from '../../assets/markers';
 
+
+
 const MapScreen = () => {
   return (
     <View style={styles.container}>
@@ -18,7 +20,9 @@ const MapScreen = () => {
         showsMyLocationButton={true}
         rotateEnabled={false}
         maxDelta={0.5} // Island Zoom Out limit
-        minDelta={0.001} 
+        minDelta={0.001}
+        
+         
       >
         <Markers />
       </MapView>
