@@ -43,7 +43,7 @@ const MARKER_DATA = [
   },
   {
     id: '5',
-    title: 'Grill & Chill',
+    title: 'Tambu Bar & Grill',
     description: 'A small local restaurant with great food and a great view.',
     coordinate: {
       latitude: 13.7575715,
