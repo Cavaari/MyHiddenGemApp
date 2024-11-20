@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { View, ScrollView, StyleSheet, FlatList, Text } from 'react-native';
+import { useRouter } from 'expo-router';
 import LocationCard from './locationCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Define the Location type
+
 type Location = {
   id: string; 
   title: string;
@@ -11,7 +13,45 @@ type Location = {
 };
 
 const Home: React.FC = () => {
-  // Use Location type for the locations array
+  const router = useRouter();
+  const [favorites, setFavorites] = useState<Location[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const savedFavorites = await AsyncStorage.getItem('favorites');
+        if (savedFavorites) {
+          setFavorites(JSON.parse(savedFavorites));
+        }
+      } catch (error) {
+        console.error('Error loading favorites from AsyncStorage:', error);
+      }finally {
+        setIsLoading(false); // Set loading state to false after the data is loaded
+      }
+    };
+
+    loadFavorites();
+  }, []);
+
+  // Save favorites to AsyncStorage whenever favorites state changes
+  useEffect(() => {
+    const saveFavorites = async () => {
+      try {
+        await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
+      } catch (error) {
+        console.error('Error saving favorites to AsyncStorage:', error);
+      }
+    };
+
+    saveFavorites();
+  }, [favorites]);
+
+  const handleAddToFavorites = (location: Location) => {
+    setFavorites((prevFavorites) => [...prevFavorites, location]);
+    console.log(`Added to favorites: ${location.title}`);
+  };
+
   const locations: Location[] = [
     {
       id: '1',
@@ -130,17 +170,35 @@ const Home: React.FC = () => {
     },
   ];
 
+  if (isLoading) {
+    return <View style={styles.container}><Text>Loading...</Text></View>;
+  }
+
   return (
-    <ScrollView style={styles.container}>
-      {locations.map((location) => (
-        <LocationCard
-          key={location.id}
-          title={location.title}
-          description={location.description}
-          imagePath={location.imagePath} 
-        />
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={locations}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <LocationCard
+            title={item.title}
+            description={item.description}
+            imagePath={item.imagePath}
+            onPress={() =>
+              router.push({
+                pathname: '/(app)/selectCard',
+                params: {
+                  title: item.title,
+                  description: item.description,
+                  imagePath: item.imagePath,
+                },
+              })
+            }
+            onHeartPress={() => handleAddToFavorites(item)}
+          />
+        )}
+      />
+    </View>
   );
 };
 
@@ -152,3 +210,5 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
+
