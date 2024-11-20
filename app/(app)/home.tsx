@@ -11,7 +11,7 @@ type Location = {
 };
 
 const Home: React.FC = () => {
-  // Use the Location type for the locations array
+  // Use Location type for the locations array
   const locations: Location[] = [
     {
       id: '1',

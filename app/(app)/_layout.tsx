@@ -19,16 +19,12 @@ export default function AppLayout() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Display the authenticated layout with nested routes */}
       <Stack 
         screenOptions={{
           headerShown: false, // removes the header from all screens in the stack
         }}
       >
-        {/* The route children will be rendered here */}
       </Stack>
-
-      {/* Navbar component at the bottom */}
       <Navbar />
     </View>
   );

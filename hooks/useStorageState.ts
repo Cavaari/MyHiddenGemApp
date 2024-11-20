@@ -40,16 +40,16 @@ async function syncWithFirebase(key: string, value: string | null) {
   if (!value) return;
   try {
     const userId = auth.currentUser?.uid; // Get current user ID
-    console.log('User ID:', userId); // Debug log
+    //console.log('User ID:', userId); // Debug log
     if (userId) {
-      console.log('Attempting to set document in Firestore...');
+      //console.log('Attempting to set document in Firestore...');
       await setDoc(doc(firestore, 'userData', userId), {
         [key]: value,
       }, { merge: true });
       console.log('Document successfully written!');
     }
   } catch (error) {
-    console.error('Failed to sync with Firebase:', error);
+    //console.error('Failed to sync with Firebase:', error);
   }
 }
 
