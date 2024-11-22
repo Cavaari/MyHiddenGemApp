@@ -191,7 +191,7 @@ const uploadMarkersToFirestore = async () => {
     }
     console.log("Markers uploaded to Firestore successfully!");
   } catch (error) {
-    //console.error("Error uploading markers: ", error);
+    console.error("Error uploading markers: ", error);
   }
 };
 

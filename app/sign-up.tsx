@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView,
 import DropDownPicker from 'react-native-dropdown-picker'; // Importing DropDownPicker
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { router } from 'expo-router';
-import { auth } from '../config/firebase'; // Import Firebase auth from your config file
+import { auth, firestore } from '../config/firebase'; // Import Firebase auth and firestore from your config file
+import { doc, setDoc } from 'firebase/firestore'; // Import Firestore methods
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,7 +28,18 @@ const SignupScreen = () => {
   const handleSignUp = async () => {
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Create a document in the 'users' collection for the new user
+      const userRef = doc(firestore, 'users', user.uid);
+      await setDoc(userRef, {
+        email: user.email,
+        role: 'user', // Default role as 'user'
+        securityQuestion,
+        securityAnswer,
+      });
+
       Alert.alert('Success', 'Account created successfully!');
       router.replace('/'); // Redirect to home screen 
     } catch (error: any) {
@@ -62,23 +74,23 @@ const SignupScreen = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {/* Security Question Dropdown */} 
-      <DropDownPicker 
-        open={open} // Controlled open state 
-        value={securityQuestion} 
-        items={securityQuestions} 
+      {/* Security Question Dropdown */}
+      <DropDownPicker
+        open={open} // Controlled open state
+        value={securityQuestion}
+        items={securityQuestions}
         setOpen={setOpen}  // Function to open/close the dropdown
         setValue={setSecurityQuestion}  // Function to set the selected value
-        containerStyle={{ height: 50, marginBottom: 15 }} 
-        style={styles.dropdown} 
-      /> 
-      {/* Security Answer Input */} 
-      <TextInput 
-        style={styles.input} 
-        placeholder="Answer" 
-        placeholderTextColor="#aaa" 
-        value={securityAnswer} 
-        onChangeText={setSecurityAnswer} 
+        containerStyle={{ height: 50, marginBottom: 15 }}
+        style={styles.dropdown}
+      />
+      {/* Security Answer Input */}
+      <TextInput
+        style={styles.input}
+        placeholder="Answer"
+        placeholderTextColor="#aaa"
+        value={securityAnswer}
+        onChangeText={setSecurityAnswer}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
@@ -122,10 +134,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   dropdown: {
-    backgroundColor: '#f0f0f0', 
-    borderColor: '#ccc', 
-    borderWidth: 1, 
-    borderRadius: 5, 
+    backgroundColor: '#f0f0f0',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
   },
   button: {
     width: '100%',

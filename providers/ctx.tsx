@@ -8,11 +8,13 @@ const AuthContext = createContext<{
   signOut: () => Promise<void>;
   session?: string | null;
   isLoading: boolean;
+  user?: { role: string };
 }>({
   signIn: async () => Promise.resolve(),
   signOut: async () => Promise.resolve(),
   session: null,
   isLoading: false,
+  user: { role: 'admin' }
 });
 
 // User info access hook

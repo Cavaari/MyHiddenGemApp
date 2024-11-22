@@ -28,4 +28,4 @@ const auth = initializeAuth(firebase, {
 // Initialize Firebase Storage
 const storage = getStorage(firebase);
 
-export { firebase, firestore, auth, storage, collection, setDoc };
+export { firebase, firestore, auth, storage, collection, setDoc, doc };
