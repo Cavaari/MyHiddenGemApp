@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+// app/customHeader.tsx
+import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const CustomHeader = () => {
-  const [isSearchActive, setIsSearchActive] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+interface CustomHeaderProps {
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery: string;
+}
+
+const CustomHeader: React.FC<CustomHeaderProps> = ({ setSearchQuery, searchQuery }) => {
+  const [isSearchActive, setIsSearchActive] = React.useState(false);
 
   const handleSearchToggle = () => {
     setIsSearchActive(!isSearchActive);
-    setSearchQuery(''); // Clear the input when toggling
+    if (!isSearchActive) {
+      setSearchQuery(''); // Clear the search query
+    }
+  };
+
+  const handleSearchInputChange = (text: string) => {
+    setSearchQuery(text); // Pass the input text to the setSearchQuery prop
   };
 
   return (
@@ -21,7 +32,7 @@ const CustomHeader = () => {
             placeholder="Search..."
             placeholderTextColor="#fff"
             value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={handleSearchInputChange}
             autoFocus
           />
           <TouchableOpacity style={styles.clearIcon} onPress={handleSearchToggle}>
@@ -48,7 +59,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     resizeMode: 'contain',
-    marginRight: 16, 
+    marginRight: 16,
   },
   iconContainer: {
     marginLeft: 'auto',

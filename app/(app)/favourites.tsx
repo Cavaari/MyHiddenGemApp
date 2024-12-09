@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 import LocationCard from '../(app)/locationCard'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+
 const Favourites = () => {
   const [favouriteCards, setFavouriteCards] = useState<any[]>([]);
 
