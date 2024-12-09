@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       } catch (error) {
         console.error('Error loading favorites from AsyncStorage:', error);
       }finally {
-        setIsLoading(false); // Set loading state to false after the data is loaded
+        setIsLoading(false); // Set loading state to false 
       }
     };
 

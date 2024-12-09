@@ -1,9 +1,10 @@
 // app/_layout.tsx
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Redirect, Stack } from 'expo-router'; // Removed Slot import
-import { useSession } from '../../providers/ctx'; // Import the SessionProvider
-import Navbar from '../../components/Navbar'; // Assuming you have a Navbar component
+import { Redirect, Stack } from 'expo-router'; 
+import { useSession } from '../../providers/ctx'; 
+import Navbar from '../../components/Navbar'; 
+import CustomHeader from './customHeader';
 
 export default function AppLayout() {
   const { session, isLoading } = useSession();
@@ -21,7 +22,10 @@ export default function AppLayout() {
     <View style={{ flex: 1 }}>
       <Stack 
         screenOptions={{
-          headerShown: false, // removes the header from all screens in the stack
+          header: () => <CustomHeader />,
+          headerShown: true, // removes the header from all screens in the stack
+          headerSearchBarOptions: {}, 
+          headerTintColor: '#000',
         }}
       >
       </Stack>

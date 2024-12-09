@@ -1,0 +1,211 @@
+[
+    {
+        "Name of Location": "The moon",
+        "Name of Area": "Cap Estate",
+        "Constituency": "Gros Islet",
+        "Location Coordinates": "14.1014727 N, 60.9229791 W",
+        "Terrain Type": "Moderately rocky",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Look out point",
+        "Recommended Viewing Time": "Day or Night",
+        "Safety Level (red orange yellow green)": "orange"
+    },
+    {
+        "Name of Location": "Naked Fisherman(Smugglers Cove Beach)",
+        "Name of Area": "Cap Estate",
+        "Constituency": "Gros Islet",
+        "Location Coordinates": "14.1005684 N, 60.9498062 W",
+        "Terrain Type": "Fair Amount of Steps",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Beach/Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Trail (idk the name)",
+        "Name of Area": "Cap Estate",
+        "Constituency": "Gros Islet",
+        "Location Coordinates": "14.1051266 N, 60.9418092 W",
+        "Terrain Type": "Pathways through forests",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Forest trail/ look out",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Vigie Cliffs",
+        "Name of Area": "Vigie",
+        "Constituency": "Castries",
+        "Location Coordinates": "14.0196995 N, 61.0019175 W",
+        "Terrain Type": "Few Steps",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Look out point",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "yellow"
+    },
+    {
+        "Name of Location": "Vieux Fort Pork Place (find out the name)",
+        "Name of Area": "Savvannes Bay?",
+        "Constituency": "Vieux Fort",
+        "Location Coordinates": "13.7575715 N, 60.9367314 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Casual Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Tapion Ruins",
+        "Name of Area": "Tapion",
+        "Constituency": "Castries",
+        "Location Coordinates": "14.016084 N, 61.006527 W",
+        "Terrain Type": "Slippery with steps",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Look out point by beach",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "yellow"
+    },
+    {
+        "Name of Location": "Plas Kassav",
+        "Name of Area": "Anse la Verdure",
+        "Constituency": "Anse-La-Raye",
+        "Location Coordinates": "13.9137373 N, 61.0560612 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Cacoa Sainte Lucie",
+        "Name of Area": "Belvedere",
+        "Constituency": "Canaries",
+        "Location Coordinates": "13.890177 N, 61.052993 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Fedo's",
+        "Name of Area": "Palmiste",
+        "Constituency": "Soufriere",
+        "Location Coordinates": "13.858301 N, 61.052272 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Skeeterz Rum Bar/Grill",
+        "Name of Area": "Sapphire",
+        "Constituency": "Laborie",
+        "Location Coordinates": "13.753496 N, 61.019571 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Beach/Bar/Grill",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Faye Gastronmie",
+        "Name of Area": "Hewanorra",
+        "Constituency": "Vieux Fort",
+        "Location Coordinates": "13.738081 N, 60.945542 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Shernells",
+        "Name of Area": "Bean Field",
+        "Constituency": "Vieux Fort",
+        "Location Coordinates": "13.729969 N, 60.951025 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Mome's Cuisine",
+        "Name of Area": "New Dock Rd",
+        "Constituency": "Vieux Fort",
+        "Location Coordinates": "13.728680 N, 60.951846 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Tet Rouge Resort",
+        "Name of Area": "La Pointe",
+        "Constituency": "Choiseul",
+        "Location Coordinates": "13.794625 N, 61.061936 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$$",
+        "Brief Description": "Resort",
+        "Recommended Viewing Time": "Day or Night",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Fond Doux Eco Resort",
+        "Name of Area": "Fond Doux",
+        "Constituency": "Soufriere",
+        "Location Coordinates": "13.822006 N, 61.050075 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$$",
+        "Brief Description": "Resort",
+        "Recommended Viewing Time": "Day or Night",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Glamity's Bar",
+        "Name of Area": "Odsan",
+        "Constituency": "Castries",
+        "Location Coordinates": "13.97211 N, 60.986569 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$$",
+        "Brief Description": "Restaurant / Bar",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "green"
+    },
+    {
+        "Name of Location": "Cinderella's Slipper Cliffs",
+        "Name of Area": "Ciceron",
+        "Constituency": "Castries",
+        "Location Coordinates": "13.996803 N, 61.014702 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Cliffs",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "yellow"
+    },
+    {
+        "Name of Location": "Mini Marigot Bay",
+        "Name of Area": "Marigot",
+        "Constituency": "Castries",
+        "Location Coordinates": "13.963085 N, 61.029930 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "-",
+        "Brief Description": "Bay/Cliffs",
+        "Recommended Viewing Time": "Day",
+        "Safety Level (red orange yellow green)": "yellow"
+    },
+    {
+        "Name of Location": "Soley Kouche",
+        "Name of Area": "Delcer",
+        "Constituency": "Choiseul",
+        "Location Coordinates": "13.799460 N, 61.061919 W",
+        "Terrain Type": "-",
+        "Price range (only if applicable)": "$",
+        "Brief Description": "Restaurant",
+        "Recommended Viewing Time": "Day or Night",
+        "Safety Level (red orange yellow green)": "green"
+    }
+]

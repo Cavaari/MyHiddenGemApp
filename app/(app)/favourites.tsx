@@ -18,7 +18,6 @@ const Favourites = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Your Favourites</Text>
       {favouriteCards.length > 0 ? (
         favouriteCards.map((card: any, index: number) => (
           <LocationCard

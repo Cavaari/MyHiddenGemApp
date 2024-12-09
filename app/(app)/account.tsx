@@ -16,7 +16,7 @@ const AccountScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         const user = auth.currentUser;
         if (user) {
           const idTokenResult = await user.getIdTokenResult();
-          const role = idTokenResult.claims.role || "user"; // Default to 'user' if no role
+          const role = idTokenResult.claims.role || "user"; 
           setIsAdmin(role === "admin");
         }
       } catch (error) {
@@ -29,7 +29,7 @@ const AccountScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   }, []);
 
   const handleAdminButtonPress = () => {
-    navigation.navigate("AdminPanel"); // Navigate to admin panel screen
+    navigation.navigate("AdminPage"); 
   };
 
   return (

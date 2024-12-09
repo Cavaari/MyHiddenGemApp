@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, Alert } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker'; // Importing DropDownPicker
+import { StyleSheet, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, Alert } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { router } from 'expo-router';
-import { auth, firestore } from '../config/firebase'; // Import Firebase auth and firestore from your config file
+import { auth, firestore } from '../config/firebase'; 
 import { doc, setDoc } from 'firebase/firestore'; // Import Firestore methods
 
 const { width, height } = Dimensions.get('window');
