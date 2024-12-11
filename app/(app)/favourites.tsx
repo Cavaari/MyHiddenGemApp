@@ -1,36 +1,72 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import LocationCard from '../(app)/locationCard'; 
+import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type Location = {
+  id: string;
+  title: string;
+  description: string;
+  imagePath: string;
+};
 
+const Favourites: React.FC = () => {
+  const router = useRouter();
+  const [favouriteCards, setFavouriteCards] = useState<Location[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-const Favourites = () => {
-  const [favouriteCards, setFavouriteCards] = useState<any[]>([]);
-
+  // Load favourites from AsyncStorage
   useEffect(() => {
     const loadFavourites = async () => {
-      const favs = await AsyncStorage.getItem('favouriteCards');
-      const favouriteCards = favs ? JSON.parse(favs) : [];
-      setFavouriteCards(favouriteCards);
-    };
+      try {
+        const favs = await AsyncStorage.getItem('favouriteCards');
+        const parsedFavourites = favs ? JSON.parse(favs) : [];
+        
+        // Ensure each card has a unique key if not provided
+        const enrichedFavourites = parsedFavourites.map((card: Location, index: number) => ({
+          ...card,
+          id: card.id || `fav-${index}`,
+        }));
 
+        setFavouriteCards(enrichedFavourites);
+      } catch (error) {
+        console.error('Error loading favourites:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     loadFavourites();
   }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loader}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {favouriteCards.length > 0 ? (
-        favouriteCards.map((card: any, index: number) => (
+        favouriteCards.map((card) => (
           <LocationCard
-            key={index}
+            key={card.id}  // Ensures a unique key
             title={card.title}
             description={card.description}
             imagePath={card.imagePath}
-            imageUrl={card.imageUrl}
-            onPress={() => { } } onHeartPress={function (): void {
-              throw new Error('Function not implemented.');
-            } }          
+            onPress={() => { 
+              router.push({
+                pathname: '/(app)/selectCard',
+                params: {
+                  id: card.id,
+                },
+              });
+            }} 
+            onHeartPress={() => {
+              console.error('Heart press not implemented.');
+            }}
           />
         ))
       ) : (
@@ -45,15 +81,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
   emptyMessage: {
     fontSize: 16,
     color: '#888',
     textAlign: 'center',
+    marginTop: 20,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

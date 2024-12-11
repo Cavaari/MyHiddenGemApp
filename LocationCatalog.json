@@ -1,248 +1,324 @@
 [
     {
+        "id": "1",
         "title": "The moon",
-        "Name of Area": "Cap Estate",
-        "Constituency": "Gros Islet",
-        "Location Coordinates": "14.1014727 N, 60.9229791 W",
-        "Terrain Type": "Moderately rocky",
-        "Price range (only if applicable)": "-",
+        "area": "Cap Estate",
+        "constituency": "Gros Islet",
+        "coordinates":{
+            "latitude": 14.1014727,
+            "longitude": -60.9229791
+        },
+        "terrain": "Moderately rocky",
+        "priceRange": "-",
         "description": "A Moonlit lookout which has spectacular views.",
-        "Recommended Viewing Time": "Day or Night",
-        "Safety Level (red orange yellow green)": "orange",
+        "recommendedViewingTime": "Day or Night",
+        "safetyLevel": "orange",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FThe%20moon.jpg?alt=media"
 
     },
     {
-        "title": "Naked Fisherman(Smugglers Cove Beach)",
-        "Name of Area": "Cap Estate",
-        "Constituency": "Gros Islet",
-        "Location Coordinates": "14.1005684 N, 60.9498062 W",
-        "Terrain Type": "Fair Amount of Steps",
-        "Price range (only if applicable)": "-",
+        "id": "2",
+        "title": "Naked Fisherman (Smugglers Cove Beach)",
+        "area": "Cap Estate",
+        "constituency": "Gros Islet",
+        "coordinates":{
+            "latitude": 14.1005684,
+            "longitude": -60.9498062
+        },
+        "terrain": "Fair Amount of Steps",
+        "priceRange": "-",
         "description": "A picturesque beach with lovely waves and warm sand.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
 
     },
     {
+        "id": "3",
         "title": "Wonderers Trail",
-        "Name of Area": "Cap Estate",
-        "Constituency": "Gros Islet",
-        "Location Coordinates": "14.1051266 N, 60.9418092 W",
-        "Terrain Type": "Pathways through forests",
-        "Price range (only if applicable)": "-",
+        "area": "Cap Estate",
+        "constituency": "Gros Islet",
+        "coordinates": {
+            "latitude": 14.1051266,
+            "longitude": -60.9418092
+        },
+        "terrain": "Pathways through forests",
+        "priceRange": "-",
         "description": "A short Trail with an impeccable view of the Atlantic ocean.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
     },
     {
-        "title": "Vigie Cliffs",
-        "Name of Area": "Vigie",
-        "Constituency": "Castries",
-        "Location Coordinates": "14.0196995 N, 61.0019175 W",
-        "Terrain Type": "Few Steps",
-        "Price range (only if applicable)": "-",
-        "description": "A short cliff which has a great view of the city.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "yellow",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "id": "4",
+        "title": "Meadows Battery",
+        "area": "Vigie",
+        "constituency": "Castries",
+        "coordinates": {
+            "latitude": 14.0196995,
+            "longitude": -61.0019175
+        },
+        "terrain": "Few Steps",
+        "priceRange": "-",
+        "description": "Ancient Ruins left during time of war between the British and French.",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "yellow",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fmeadowsbattery2.jpg?alt=media"
 
     },
     {
+        "id": "5",
         "title": "Tambu Bar & Grill",
-        "Name of Area": "Savvannes Bay?",
-        "Constituency": "Vieux Fort",
-        "Location Coordinates": "13.7575715 N, 60.9367314 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "-",
+        "area": "Savvannes Bay?",
+        "constituency": "Vieux Fort",
+        "coordinates": {
+            "latitude": 13.7575715,
+            "longitude": -60.9367314
+        },
+        "terrain": "-",
+        "priceRange": "-",
         "description": "A small local restaurant with great food and a great view.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ftambupatio.jpg?alt=media"
 
     },
     {
+        "id": "6",
         "title": "Tapion Ruins",
-        "Name of Area": "Tapion",
-        "Constituency": "Castries",
-        "Location Coordinates": "14.016084 N, 61.006527 W",
-        "Terrain Type": "Slippery with steps",
-        "Price range (only if applicable)": "-",
+        "area": "Tapion",
+        "constituency": "Castries",
+        "coordinates": {
+            "latitude": 14.016084,
+            "longitude": -61.006527
+        },
+        "terrain": "Slippery with steps",
+        "priceRange": "-",
         "description": "Ancient Ruins which cross a portion of the sea.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "yellow",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "yellow",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ftapionruins.JPG?alt=media"
 
     },
     {
+        "id": "7",
         "title": "Plas Kassav",
-        "Name of Area": "Anse la Verdure",
-        "Constituency": "Anse-La-Raye",
-        "Location Coordinates": "13.9137373 N, 61.0560612 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "area": "Anse la Verdure",
+        "constituency": "Anse-La-Raye",
+        "coordinates": {
+            "latitude": 13.9137373,
+            "longitude": -61.0560612
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A popular restaurant serving traditional cassava bread.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fplaskassav.jpg?alt=media"
 
     },
     {
+        "id": "8",
         "title": "Cacoa Sainte Lucie",
-        "Name of Area": "Belvedere",
-        "Constituency": "Canaries",
-        "Location Coordinates": "13.890177 N, 61.052993 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "area": "Belvedere",
+        "constituency": "Canaries",
+        "coordinates": {
+            "latitude": 13.890177,
+            "longitude": -61.052993
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A cozy restaurant with a beautiful view at Belvedere.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fcacaosaintelucie.jpg?alt=media"
 
     },
     {
-        "title": "Fedo's",
-        "Name of Area": "Palmiste",
-        "Constituency": "Soufriere",
-        "Location Coordinates": "13.858301 N, 61.052272 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "id": "9",
+        "title": "Fedo's Restaurant",
+        "area": "Palmiste",
+        "constituency": "Soufriere",
+        "coordinates": {
+            "latitude": 13.858301,
+            "longitude": -61.052272
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A local restaurant in Palmiste, Soufriere known for authentic cuisine.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ffedosfood.jpg?alt=media"
 
     },
     {
+        "id": "10",
         "title": "Skeeterz Rum Bar/Grill",
-        "Name of Area": "Sapphire",
-        "Constituency": "Laborie",
-        "Location Coordinates": "13.753496 N, 61.019571 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "area": "Sapphire",
+        "constituency": "Laborie",
+        "coordinates": {
+            "latitude": 13.753496,
+            "longitude": -61.019571
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A beachfront bar and grill at Sapphire in Laborie.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fskeeterz.jpg?alt=media"
 
     },
     {
+        "id": "11",
         "title": "Faye Gastronmie",
-        "Name of Area": "Hewanorra",
-        "Constituency": "Vieux Fort",
-        "Location Coordinates": "13.738081 N, 60.945542 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$$",
+        "area": "Hewanorra",
+        "constituency": "Vieux Fort",
+        "coordinates": {
+            "latitude": 13.738081,
+            "longitude": -60.945542
+        },
+        "terrain": "-",
+        "priceRange": "$$",
         "description": "A slightly upscale restaurant located in Hewanorra, Vieux Fort.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ffaye.jpg?alt=media"
 
     },
     {
-        "title": "Shernells",
-        "Name of Area": "Bean Field",
-        "Constituency": "Vieux Fort",
-        "Location Coordinates": "13.729969 N, 60.951025 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
-        "description": "A budget-friendly restaurant in Bean Field, Vieux Fort.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "id": "12",
+        "title": "Uncle Sammy's",
+        "area": "Bean Field",
+        "constituency": "Vieux Fort",
+        "coordinates": {
+            "latitude": 13.729969,
+            "longitude": -60.951025
+        },
+        "terrain": "-",
+        "priceRange": "$",
+        "description": "A budget-friendly pizzeria in Bean Field, Vieux Fort.",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Funcsam.jpg?alt=media"
 
     },
     {
+        "id": "13",
         "title": "Mome's Cuisine",
-        "Name of Area": "New Dock Rd",
-        "Constituency": "Vieux Fort",
-        "Location Coordinates": "13.728680 N, 60.951846 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "area": "New Dock Rd",
+        "constituency": "Vieux Fort",
+        "coordinates": {
+            "latitude": 13.728680,
+            "longitude": -60.951846
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A casual dining spot on New Dock Road in Vieux Fort.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fmome.jpg?alt=media"
 
     },
     {
+        "id": "14",
         "title": "Tet Rouge Resort",
-        "Name of Area": "La Pointe",
-        "Constituency": "Choiseul",
-        "Location Coordinates": "13.794625 N, 61.061936 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$$",
+        "area": "La Pointe",
+        "constituency": "Choiseul",
+        "coordinates": {
+            "latitude": 13.794625,
+            "longitude": -61.061936
+        },
+        "terrain": "-",
+        "priceRange": "$$",
         "description": "An eco-friendly resort with stunning views at La Pointe, Choiseul.",
-        "Recommended Viewing Time": "Day or Night",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day or Night",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ftetrouge.jpg?alt=media"
 
     },
     {
+        "id": "15",
         "title": "Fond Doux Eco Resort",
-        "Name of Area": "Fond Doux",
-        "Constituency": "Soufriere",
-        "Location Coordinates": "13.822006 N, 61.050075 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$$",
+        "area": "Fond Doux",
+        "constituency": "Soufriere",
+        "coordinates": {
+            "latitude": 13.822006,
+            "longitude": -61.050075
+        },
+        "terrain": "-",
+        "priceRange": "$$",
         "description": "An eco-friendly resort nestled in the heart of Fond Doux, Soufriere.",
-        "Recommended Viewing Time": "Day or Night",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day or Night",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Ffonddoux.jpg?alt=media"
 
     },
     {
+        "id": "16",
         "title": "Glamity's Bar",
-        "Name of Area": "Odsan",
-        "Constituency": "Castries",
-        "Location Coordinates": "13.97211 N, 60.986569 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$$",
+        "area": "Odsan",
+        "constituency": "Castries",
+        "coordinates": {
+            "latitude": 13.97211,
+            "longitude": -60.986569
+        },
+        "terrain": "-",
+        "priceRange": "$$",
         "description": "A popular local restaurant and bar located in Odsan, Castries.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "green",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "green",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fglamityfood.jpg?alt=media"
 
     },
     {
+        "id": "17",
         "title": "Cinderella's Slipper Cliffs",
-        "Name of Area": "Ciceron",
-        "Constituency": "Castries",
-        "Location Coordinates": "13.996803 N, 61.014702 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "-",
+        "area": "Ciceron",
+        "constituency": "Castries",
+        "coordinates": {
+            "latitude": 13.996803,
+            "longitude": -61.014702
+        },
+        "terrain": "-",
+        "priceRange": "-",
         "description": "Beautiful cliffs located in Ciceron, Castries.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "yellow",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "yellow",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fcinderellacliff.jpeg?alt=media"
 
     },
     {
+        "id": "18",
         "title": "Mini Marigot Bay",
-        "Name of Area": "Marigot",
-        "Constituency": "Castries",
-        "Location Coordinates": "13.963085 N, 61.029930 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "-",
+        "area": "Marigot",
+        "constituency": "Castries",
+        "coordinates": {
+            "latitude": 13.963085,
+            "longitude": -61.029930
+        },
+        "terrain": "-",
+        "priceRange": "-",
         "description": "A smaller, picturesque bay with scenic cliffs in Marigot, Castries.",
-        "Recommended Viewing Time": "Day",
-        "Safety Level (red orange yellow green)": "yellow",
+        "recommendedViewingTime": "Day",
+        "safetyLevel": "yellow",
         "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fminimarigotbay.jpg?alt=media"
 
     },
     {
+        "id": "19",
         "title": "Soley Kouche",
-        "Name of Area": "Delcer",
-        "Constituency": "Choiseul",
-        "Location Coordinates": "13.799460 N, 61.061919 W",
-        "Terrain Type": "-",
-        "Price range (only if applicable)": "$",
+        "area": "Delcer",
+        "constituency": "Choiseul",
+        "coordinates": {
+            "latitude": 13.799460,
+            "longitude": -61.061919
+        },
+        "terrain": "-",
+        "priceRange": "$",
         "description": "A quaint restaurant in Delcer, Choiseul offering local cuisine.",
-        "Recommended Viewing Time": "Day or Night",
-        "Safety Level (red orange yellow green)": "green",
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2FNaked%20Fisherman.jpg?alt=media"
+        "recommendedViewingTime": "Day or Night",
+        "safetyLevel": "green",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/myhiddengemapp.appspot.com/o/location%20images%2Fsoleykouche.jpg?alt=media"
 
     }
 ]

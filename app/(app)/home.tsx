@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Text, Alert } from 'react-native';
 import LocationCard from './locationCard';
-import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter, useGlobalSearchParams } from 'expo-router';
 import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../../config/firebase';
 
@@ -13,16 +12,12 @@ type Location = {
   imagePath: string;
 };
 
-interface HomeProps {
-  filter: string;
-}
-
-const Home: React.FC<HomeProps> = ({ filter }) => {
-  const [favorites, setFavorites] = useState<Location[]>([]);
+const Home: React.FC = () => {
+  const router = useRouter();
+  const { searchQuery } = useGlobalSearchParams<{ searchQuery: string }>(); // Retrieve the searchQuery
   const [locations, setLocations] = useState<Location[]>([]);
   const [filteredLocations, setFilteredLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const router = useRouter();
 
   // Fetch locations from Firestore
   useEffect(() => {
@@ -40,7 +35,6 @@ const Home: React.FC<HomeProps> = ({ filter }) => {
           });
         });
         setLocations(fetchedLocations);
-        setFilteredLocations(fetchedLocations); // Initialize the filtered data
       } catch (error) {
         console.error('Error fetching locations:', error);
       } finally {
@@ -51,27 +45,18 @@ const Home: React.FC<HomeProps> = ({ filter }) => {
     fetchLocations();
   }, []);
 
-  // Filter locations based on user input from props
+  // Filter locations dynamically based on searchQuery
   useEffect(() => {
-    if (filter) {
+    if (searchQuery) {
       setFilteredLocations(
         locations.filter((location) =>
-          location.title.toLowerCase().includes(filter.toLowerCase())
+          location.title.toLowerCase().includes(searchQuery.toLowerCase())
         )
       );
     } else {
       setFilteredLocations(locations);
     }
-  }, [filter, locations]);
-
-  const handleAddToFavorites = (location: Location) => {
-    if (favorites.some((fav) => fav.id === location.id)) {
-      Alert.alert('Duplicate', `${location.title} is already in your favorites.`);
-      return;
-    }
-    setFavorites((prevFavorites) => [...prevFavorites, location]);
-    Alert.alert('Added', `${location.title} has been added to your favorites.`);
-  };
+  }, [searchQuery, locations]);
 
   if (isLoading) {
     return (
@@ -85,7 +70,7 @@ const Home: React.FC<HomeProps> = ({ filter }) => {
     <View style={styles.container}>
       <FlatList
         data={filteredLocations}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <LocationCard
             title={item.title}
@@ -95,14 +80,15 @@ const Home: React.FC<HomeProps> = ({ filter }) => {
               router.push({
                 pathname: '/(app)/selectCard',
                 params: {
+                  id: item.id,
                   title: item.title,
                   description: item.description,
                   imagePath: item.imagePath,
                 },
               });
-            }}
-            onHeartPress={() => handleAddToFavorites(item)}
-          />
+            } } onHeartPress={function (): void {
+              throw new Error('Function not implemented.');
+            } }          />
         )}
         contentContainerStyle={styles.listContent}
       />

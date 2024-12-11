@@ -1,4 +1,3 @@
-// app/_layout.tsx
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
@@ -24,10 +23,11 @@ export default function AppLayout() {
         screenOptions={{
           header: () => <CustomHeader setSearchQuery={setSearchQuery} searchQuery={searchQuery} />,
           headerShown: true,
-          headerSearchBarOptions: {},
-          headerTintColor: '#000',
         }}
-      />
+      >
+        {/* Pass searchQuery as a prop to the Home screen */}
+        <Stack.Screen name="home" options={{ title: 'Home' }} initialParams={{ searchQuery }} />
+      </Stack>
       <Navbar />
     </View>
   );
