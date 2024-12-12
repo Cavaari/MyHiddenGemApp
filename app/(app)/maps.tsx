@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import MapView from 'react-native-maps';
 import { firestore, collection, getDocs } from '../../config/firebase';
+import Markers from '@/assets/markers';
+
+interface MarkerData {
+  id: string;
+  title: string;
+  description: string;
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  };
+  imagePath: string;
+}
 
 const MapScreen = () => {
-  interface MarkerData {
-    id: string;
-    title: string;
-    description: string;
-    coordinates: {
-      latitude: number;
-      longitude: number;
-    };
-  }
-
   const [markerData, setMarkerData] = useState<MarkerData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,13 +23,22 @@ const MapScreen = () => {
     try {
       const locationsCollection = collection(firestore, 'locations');
       const snapshot = await getDocs(locationsCollection);
-      const markers = snapshot.docs.map((doc: { id: any; data: () => any; }) => ({
+
+      const markers: MarkerData[] = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        title: doc.data().title,
+        description: doc.data().description,
+        coordinate: {
+          latitude: doc.data().coordinates.latitude,
+          longitude: doc.data().coordinates.longitude,
+        },
+        imagePath: doc.data().imagePath || '',
       }));
+
+      //console.log('Fetched Markers:', markers); 
       setMarkerData(markers);
     } catch (error) {
-      console.error('Error fetching markers: ', error);
+      console.error('Error fetching markers:', error);
     } finally {
       setLoading(false);
     }
@@ -44,7 +55,7 @@ const MapScreen = () => {
       </View>
     );
   }
-  
+
   return (
     <View style={styles.container}>
       <MapView
@@ -55,26 +66,13 @@ const MapScreen = () => {
           latitudeDelta: 0.8,
           longitudeDelta: 0.6,
         }}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
+        showsUserLocation
+        showsMyLocationButton
         rotateEnabled={false}
-        maxDelta={0.5} // Island Zoom Out limit
+        maxDelta={0.5}
         minDelta={0.001}
       >
-        {markerData.map((marker) => (
-          <Marker
-            key={marker.id}
-            coordinate={marker.coordinates}
-            title={marker.title}
-          >
-            <Callout>
-              <View>
-                <Text style={styles.calloutTitle}>{marker.title}</Text>
-                <Text>{marker.description}</Text>
-              </View>
-            </Callout>
-          </Marker>
-        ))}
+        <Markers markerData={markerData} />
       </MapView>
     </View>
   );
@@ -91,11 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  calloutTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 4,
   },
 });
 
