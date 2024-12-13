@@ -18,6 +18,7 @@ const AccountScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
           const idTokenResult = await user.getIdTokenResult();
           const role = idTokenResult.claims.role || "user"; 
           setIsAdmin(role === "admin");
+          // console.log("user role:", idTokenResult.claims.role);
         }
       } catch (error) {
         console.error("Error fetching user role:", error);

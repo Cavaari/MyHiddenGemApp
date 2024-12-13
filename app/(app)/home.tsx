@@ -5,6 +5,7 @@ import LocationCard from './locationCard';
 import { useRouter } from 'expo-router';
 import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../../config/firebase';
+import { getAuth } from 'firebase/auth';
 import { useSearch } from '../../providers/searchContext';
 
 type Location = {
@@ -21,33 +22,26 @@ const Home: React.FC = () => {
   const [filteredLocations, setFilteredLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Fetch locations from Firestore
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(firestore, 'locations'));
-        const fetchedLocations: Location[] = querySnapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            title: data.title,
-            description: data.description,
-            imagePath: data.imagePath,
-          } as Location;
-        });
-        setLocations(fetchedLocations);
-        setFilteredLocations(fetchedLocations);
-      } catch (error) {
-        console.error('Error fetching locations:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchLocations = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'locations'));
+      const fetchedLocations: Location[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Location[];
+      setLocations(fetchedLocations);
+      setFilteredLocations(fetchedLocations);
+    } catch (error) {
+      console.error('Error fetching locations:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchLocations();
   }, []);
 
-  // Filter locations dynamically based on searchQuery
   useEffect(() => {
     const filterResults = () => {
       if (searchQuery?.trim()) {
@@ -79,20 +73,16 @@ const Home: React.FC = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <LocationCard
+            id={item.id}
             title={item.title}
             description={item.description}
             imagePath={item.imagePath}
-            onPress={() => {
+            onPress={() =>
               router.push({
                 pathname: '/(app)/selectCard',
-                params: {
-                  id: item.id,
-                },
-              });
-            }}
-            onHeartPress={() => {
-              console.error('Heart press not implemented.');
-            }}
+                params: { id: item.id },
+              })
+            }
           />
         )}
         contentContainerStyle={styles.listContent}

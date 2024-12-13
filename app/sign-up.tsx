@@ -11,18 +11,18 @@ const { width, height } = Dimensions.get('window');
 const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [securityQuestion, setSecurityQuestion] = useState(''); // Initialize with an empty string
-  const [securityAnswer, setSecurityAnswer] = useState('');
+  // const [securityQuestion, setSecurityQuestion] = useState(''); // Initialize with an empty string
+  // const [securityAnswer, setSecurityAnswer] = useState('');
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false); // State to control the dropdown
 
   // Updated options for the security question dropdown
-  const securityQuestions = [
-    { label: "Select a Security Question", value: '' }, // Use an empty string instead of null
-    { label: "What is your mother's maiden name?", value: 'mother_maiden_name' },
-    { label: "What was the name of your first pet?", value: 'first_pet' },
-    { label: "What is your favorite book?", value: 'favorite_book' },
-  ];
+  // const securityQuestions = [
+  //   { label: "Select a Security Question", value: '' }, // Use an empty string instead of null
+  //   { label: "What is your mother's maiden name?", value: 'mother_maiden_name' },
+  //   { label: "What was the name of your first pet?", value: 'first_pet' },
+  //   { label: "What is your favorite book?", value: 'favorite_book' },
+  // ];
 
   // Handle sign-up
   const handleSignUp = async () => {
@@ -36,8 +36,8 @@ const SignupScreen = () => {
       await setDoc(userRef, {
         email: user.email,
         role: 'user', // Default role as 'user'
-        securityQuestion,
-        securityAnswer,
+        // securityQuestion,
+        // securityAnswer,
       });
 
       Alert.alert('Success', 'Account created successfully!');

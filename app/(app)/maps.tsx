@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import MapView from 'react-native-maps';
 import { firestore, collection, getDocs } from '../../config/firebase';
 import Markers from '@/assets/markers';
+import { SearchContext } from '../../providers/searchContext'; 
 
 interface MarkerData {
   id: string;
@@ -17,7 +18,11 @@ interface MarkerData {
 
 const MapScreen = () => {
   const [markerData, setMarkerData] = useState<MarkerData[]>([]);
+  const [filteredMarkers, setFilteredMarkers] = useState<MarkerData[]>([]);
   const [loading, setLoading] = useState(true);
+  const searchContext = useContext(SearchContext);
+  const searchQuery = searchContext?.searchQuery || '';
+  const setSearchQuery = searchContext?.setSearchQuery || (() => {});
 
   const fetchMarkersFromFirebase = async () => {
     try {
@@ -35,8 +40,8 @@ const MapScreen = () => {
         imagePath: doc.data().imagePath || '',
       }));
 
-      //console.log('Fetched Markers:', markers); 
       setMarkerData(markers);
+      setFilteredMarkers(markers);
     } catch (error) {
       console.error('Error fetching markers:', error);
     } finally {
@@ -47,6 +52,24 @@ const MapScreen = () => {
   useEffect(() => {
     fetchMarkersFromFirebase();
   }, []);
+
+  // Filter markers dynamically
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const filtered = markerData.filter((marker) =>
+        marker.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        marker.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredMarkers(filtered);
+    } else {
+      setFilteredMarkers(markerData);
+    }
+  }, [searchQuery, markerData]);
+
+  // Clear search on page leave
+  useEffect(() => {
+    return () => setSearchQuery(''); 
+  }, [setSearchQuery]);
 
   if (loading) {
     return (
@@ -72,7 +95,7 @@ const MapScreen = () => {
         maxDelta={0.5}
         minDelta={0.001}
       >
-        <Markers markerData={markerData} />
+        <Markers markerData={filteredMarkers} />
       </MapView>
     </View>
   );

@@ -1,23 +1,29 @@
+// locationCard.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { ref, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../config/firebase';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storage, firestore } from '../../config/firebase';
+import { getAuth } from 'firebase/auth';
+import { doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { FontAwesome } from '@expo/vector-icons';
 
 interface LocationCardProps {
+  id: string;
   title: string;
   description: string;
   imagePath: string;
-  imageUrl?: string;
   onPress: () => void;
-  onHeartPress: () => void;
 }
 
-const LocationCard: React.FC<LocationCardProps> = ({ title, description, imagePath, onPress, onHeartPress }) => {
+const LocationCard: React.FC<LocationCardProps> = ({
+  id, title, description, imagePath, onPress
+}) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [isFavourited, setIsFavourited] = useState(false);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -33,52 +39,64 @@ const LocationCard: React.FC<LocationCardProps> = ({ title, description, imagePa
     };
 
     fetchImage();
-    checkIfFavourited(); // Check if the card is favourited
+    if (user?.uid) checkIfFavourited(); 
   }, [imagePath]);
 
-  // Function to check if this card is favourited from AsyncStorage
   const checkIfFavourited = async () => {
-    const favs = await AsyncStorage.getItem('favouriteCards');
-    const favouriteCards = favs ? JSON.parse(favs) : [];
-    setIsFavourited(favouriteCards.some((card: any) => card.title === title)); // Check if the current card is in the favourites
+    if (!user?.uid) return;
+
+    try {
+      const favDoc = doc(firestore, `users/${user.uid}/favourites`, id);
+      const favSnapshot = await getDoc(favDoc);
+      setIsFavourited(favSnapshot.exists());
+    } catch (error) {
+      console.error('Error checking favourites:', error);
+    }
   };
 
-  // Handle heart button press to add/remove from favourites
   const handleHeartPress = async () => {
-    if (isFavourited) {
-      // Show confirmation dialog before removing
-      Alert.alert(
-        "Remove from favourites",
-        "Are you sure you want to remove this location from your favourites?",
-        [
-          {
-            text: "Cancel",
-            style: "cancel",
-          },
-          {
-            text: "Remove",
-            style: "destructive",
-            onPress: async () => {
-              let favs = await AsyncStorage.getItem('favouriteCards');
-              const favouriteCards = favs ? JSON.parse(favs) : [];
+    if (!user?.uid) {
+      Alert.alert('Error', 'You must be signed in to manage favourites.');
+      return;
+    }
 
-              // Remove from favourites
-              const updatedFavourites = favouriteCards.filter((card: any) => card.title !== title);
-              await AsyncStorage.setItem('favouriteCards', JSON.stringify(updatedFavourites));
-              setIsFavourited(false);
-            }
-          }
+    const favDoc = doc(firestore, `users/${user.uid}/favourites`, id);
+
+    if (isFavourited) {
+      Alert.alert(
+        'Remove from favourites',
+        'Are you sure you want to remove this location from your favourites?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Remove',
+            style: 'destructive',
+            onPress: async () => {
+              try {
+                await deleteDoc(favDoc);
+                setIsFavourited(false);
+                Alert.alert('Removed', `${title} has been removed from your favourites.`);
+              } catch (error) {
+                console.error('Error removing favourite:', error);
+              }
+            },
+          },
         ]
       );
     } else {
-      // Add to favourites if not favourited
-      let favs = await AsyncStorage.getItem('favouriteCards');
-      const favouriteCards = favs ? JSON.parse(favs) : [];
-
-      const newFavourite = { title, description, imagePath, imageUrl };
-      favouriteCards.push(newFavourite);
-      await AsyncStorage.setItem('favouriteCards', JSON.stringify(favouriteCards));
-      setIsFavourited(true);
+      try {
+        await setDoc(favDoc, {
+          id,
+          title,
+          description,
+          imagePath,
+          imageUrl,
+        });
+        setIsFavourited(true);
+        Alert.alert('Added', `${title} has been added to your favourites.`);
+      } catch (error) {
+        console.error('Error adding to favourites:', error);
+      }
     }
   };
 
@@ -94,9 +112,9 @@ const LocationCard: React.FC<LocationCardProps> = ({ title, description, imagePa
         <Text style={styles.description}>{description}</Text>
       </View>
       <TouchableOpacity style={styles.heartButton} onPress={handleHeartPress}>
-        <FontAwesome 
-          name="heart" 
-          style={[styles.icon, { color: isFavourited ? 'red' : '#ddd' }]} 
+        <FontAwesome
+          name="heart"
+          style={[styles.icon, { color: isFavourited ? 'red' : '#ddd' }]}
         />
       </TouchableOpacity>
     </TouchableOpacity>
@@ -109,9 +127,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    // shadowColor: '#000',
-    // shadowOpacity: 0.1,
-    // shadowRadius: 10,
     elevation: 5,
   },
   image: {

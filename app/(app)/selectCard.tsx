@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useRouter, useGlobalSearchParams } from 'expo-router';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { getFirestore, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { useGlobalSearchParams } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons';
 
 type Location = {
   id: string;
@@ -22,20 +21,22 @@ type Location = {
 };
 
 const SelectCard: React.FC = () => {
-  const router = useRouter();
   const { id } = useGlobalSearchParams();
   const [location, setLocation] = useState<Location | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isFavourited, setIsFavourited] = useState<boolean>(false);
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const db = getFirestore();
+
   // Check if the location is already in favourites
-  const checkIfFavourited = async (locationId: string) => {
+  const checkIfFavourited = async () => {
+    if (!user?.uid || !id) return;
+
     try {
-      const storedFavourites = await AsyncStorage.getItem('favouriteCards');
-      const favourites = storedFavourites ? JSON.parse(storedFavourites) : [];
-      const exists = favourites.some((fav: Location) => fav.id === locationId);
-      setIsFavourited(exists);
+      const favDoc = doc(db, `users/${user.uid}/favourites`, id as string);
+      const favSnapshot = await getDoc(favDoc);
+      setIsFavourited(favSnapshot.exists());
     } catch (error) {
       console.error('Error checking favourites:', error);
     }
@@ -43,95 +44,84 @@ const SelectCard: React.FC = () => {
 
   // Add or remove from favourites
   const handleHeartPress = async () => {
+    if (!user?.uid || !id || !location) return;
+
+    const favDoc = doc(db, `users/${user.uid}/favourites`, id as string);
+
     try {
-      const storedFavourites = await AsyncStorage.getItem('favouriteCards');
-      const favourites = storedFavourites ? JSON.parse(storedFavourites) : [];
-
-      let updatedFavourites;
-
       if (isFavourited) {
-        updatedFavourites = favourites.filter((fav: Location) => fav.id !== id);
+        // Remove from favourites
+        await deleteDoc(favDoc);
+        Alert.alert('Removed', `${location.title} removed from favourites.`);
         setIsFavourited(false);
-        Alert.alert('Removed', `${location?.title} removed from favourites.`);
       } else {
-        updatedFavourites = [...favourites, location];
+        // Add to favourites
+        await setDoc(favDoc, { ...location });
+        Alert.alert('Added', `${location.title} added to favourites.`);
         setIsFavourited(true);
-        Alert.alert('Added', `${location?.title} added to favourites.`);
       }
-
-      await AsyncStorage.setItem('favouriteCards', JSON.stringify(updatedFavourites));
     } catch (error) {
       console.error('Error updating favourites:', error);
+      Alert.alert('Error', 'Could not update favourites. Please try again.');
     }
   };
 
+  // Fetch location details from Firestore
   useEffect(() => {
-    if (id && typeof id === 'string') {
-      checkIfFavourited(id);
-    }
-
     const fetchLocation = async () => {
+      if (!id) return;
+
       try {
-        const db = getFirestore();
         const locationRef = doc(db, 'locations', id as string);
         const snapshot = await getDoc(locationRef);
 
         if (snapshot.exists()) {
           const data = snapshot.data();
-          const locationData: Location = {
-            id: id as string,
-            title: data.title || '',
-            area: data.area || '',
-            community: data.community || '',
-            coordinates: `${data.coordinates.latitude}, ${data.coordinates.longitude}` || '',
-            terrain: data.terrain || '',
-            priceRange: data.priceRange || '',
-            description: data.description || '',
-            recommendedViewingTime: data.recommendedViewingTime || '',
-            safetyLevel: data.safetyLevel || '',
-            imagePath: data.imagePath || '',
-            recommendedModeOfTravel: data.recommendedModeOfTravel || '',
-          };
-
-          setLocation(locationData);
-
-          if (locationData.imagePath) {
-            const storage = getStorage();
-            const imageRef = ref(storage, locationData.imagePath);
-            const url = await getDownloadURL(imageRef);
-            setImageUrl(url);
+          if (data) {
+            setLocation({
+              id: id as string,
+              title: data.title || '',
+              area: data.area || '',
+              community: data.community || '',
+              coordinates: `${data.coordinates.latitude}, ${data.coordinates.longitude}` || '',
+              terrain: data.terrain || '',
+              priceRange: data.priceRange || '',
+              description: data.description || '',
+              recommendedViewingTime: data.recommendedViewingTime || '',
+              safetyLevel: data.safetyLevel || '',
+              imagePath: data.imagePath || '',
+              recommendedModeOfTravel: data.recommendedModeOfTravel || '',
+            });
+          } else {
+            console.error('Fetched data is empty.');
           }
         } else {
-          console.log('No document found for ID:', id);
+          console.error('No document found for ID:', id);
+        }
+
+        if (user?.uid) {
+          await checkIfFavourited();
         }
       } catch (error) {
         console.error('Error fetching location:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
-    if (id) {
-      fetchLocation();
-    }
+    fetchLocation();
   }, [id]);
 
-  if (isLoading) {
-    return <View style={styles.container}><Text>Loading...</Text></View>;
-  }
-
   if (!location) {
-    return <View style={styles.container}><Text>Location not found</Text></View>;
+    return (
+      <View style={styles.container}>
+        <Text>Location not found</Text>
+      </View>
+    );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.imageContainer}>
-        {imageUrl ? (
-          <Image source={{ uri: imageUrl }} style={styles.image} />
-        ) : (
-          <Text>No image available</Text>
-        )}
+        <Image source={{ uri: location.imagePath }} style={styles.image} />
         <TouchableOpacity style={styles.heartButton} onPress={handleHeartPress}>
           <FontAwesome
             name="heart"
@@ -150,8 +140,8 @@ const SelectCard: React.FC = () => {
         <Text style={styles.detailHeader}>Community:</Text>
         <Text style={styles.detailText}>{location.community}</Text>
 
-        <Text style={styles.detailHeader}>Coordinates:</Text>
-        <Text style={styles.detailText}>{location.coordinates}</Text>
+        {/* <Text style={styles.detailHeader}>Coordinates:</Text>
+        <Text style={styles.detailText}>{location.coordinates}</Text> */}
 
         <Text style={styles.detailHeader}>Terrain:</Text>
         <Text style={styles.detailText}>{location.terrain}</Text>
