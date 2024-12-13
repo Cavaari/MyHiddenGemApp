@@ -30,7 +30,7 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('@/assets/images/gem-logo.png')} style={styles.logo} />
+      <Image source={require('@/assets/images/gem-logo-2.png')} style={styles.logo} />
       <Text style={styles.title}>Sign In</Text>
       <TextInput
         style={styles.input}

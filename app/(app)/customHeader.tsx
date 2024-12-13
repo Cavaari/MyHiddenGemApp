@@ -1,33 +1,24 @@
+// app/customHeader.tsx
 import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, Image, Platform, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSearch } from '../../providers/searchContext';
 
-interface CustomHeaderProps {
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchQuery: string;
-}
-
-const CustomHeader: React.FC<CustomHeaderProps> = ({ setSearchQuery, searchQuery }) => {
+const CustomHeader: React.FC = () => {
+  const { searchQuery, setSearchQuery } = useSearch();
   const [isSearchActive, setIsSearchActive] = React.useState(false);
 
   const handleSearchToggle = () => {
     setIsSearchActive(!isSearchActive);
     if (!isSearchActive) {
-      setSearchQuery(''); // Clear the search query
+      setSearchQuery('');
     }
-  };
-
-  const handleSearchInputChange = (text: string) => {
-    setSearchQuery(text); // Update the search query
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <Image source={require('../../assets/images/gem-logo.png')} style={styles.logo} />
-        </View>
-
+        <Image source={require('../../assets/images/gem-logo-2.png')} style={styles.logo} />
         {isSearchActive ? (
           <View style={styles.searchContainer}>
             <TextInput
@@ -35,7 +26,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ setSearchQuery, searchQuery
               placeholder="Search..."
               placeholderTextColor="#fff"
               value={searchQuery}
-              onChangeText={handleSearchInputChange}
+              onChangeText={setSearchQuery}
               autoFocus
             />
             <TouchableOpacity style={styles.clearIcon} onPress={handleSearchToggle}>
@@ -61,21 +52,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: Platform.OS === 'ios' ? 1 : 8, // Adjust for iOS notch
-    paddingBottom: 12,
-    paddingHorizontal: 16,
+    paddingBottom: 10,
+    paddingHorizontal: 14,
     backgroundColor: '#FF7B00',
   },
-  logoContainer: {
-    width: 45,  // Adjust the width to give more room for the logo
-    height: 45, // Adjust the height accordingly
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'visible',  // Change overflow to visible to avoid clipping
-  },
   logo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',  // Keep the image proportionally scaled
+    width: 50,  // Adjusted size for the logo
+    height: 50, // Adjusted size for the logo
+    resizeMode: 'contain',
+    marginRight: 16,
   },
   iconContainer: {
     marginLeft: 'auto',

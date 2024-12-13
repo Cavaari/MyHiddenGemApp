@@ -55,7 +55,7 @@ const SignupScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require('@/assets/images/gem-logo.png')} style={styles.logo} />
+      <Image source={require('@/assets/images/gem-logo-2.png')} style={styles.logo} />
       <Text style={styles.title}>Sign Up</Text>
       <TextInput
         style={styles.input}
@@ -74,8 +74,8 @@ const SignupScreen = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {/* Security Question Dropdown */}
-      <DropDownPicker
+      
+      {/* <DropDownPicker
         open={open} // Controlled open state
         value={securityQuestion}
         items={securityQuestions}
@@ -84,14 +84,14 @@ const SignupScreen = () => {
         containerStyle={{ height: 50, marginBottom: 15 }}
         style={styles.dropdown}
       />
-      {/* Security Answer Input */}
+      
       <TextInput
         style={styles.input}
         placeholder="Answer"
         placeholderTextColor="#aaa"
         value={securityAnswer}
         onChangeText={setSecurityAnswer}
-      />
+      /> */}
 
       <TouchableOpacity style={styles.button} onPress={handleSignUp} disabled={loading}>
         <Text style={styles.buttonText}>{loading ? 'Signing Up...' : 'SIGN UP'}</Text>
