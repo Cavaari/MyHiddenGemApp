@@ -18,6 +18,7 @@ type Location = {
   safetyLevel: string;
   imagePath: string;
   recommendedModeOfTravel: string;
+  recommendedActivities: string;
 };
 
 const SelectCard: React.FC = () => {
@@ -92,6 +93,7 @@ const SelectCard: React.FC = () => {
               safetyLevel: data.safetyLevel || '',
               imagePath: data.imagePath || '',
               recommendedModeOfTravel: data.recommendedModeOfTravel || '',
+              recommendedActivities: data.recommendedActivities || '',
             });
           } else {
             console.error('Fetched data is empty.');
@@ -170,6 +172,9 @@ const SelectCard: React.FC = () => {
 
         <Text style={styles.detailHeader}>Recommended Mode of Travel:</Text>
         <Text style={styles.detailText}>{location.recommendedModeOfTravel}</Text>
+
+        <Text style={styles.detailHeader}>Recommended Activities:</Text>
+        <Text style={styles.detailText}>{location.recommendedActivities}</Text>
       </View>
 
       <TouchableOpacity
