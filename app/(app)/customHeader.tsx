@@ -9,10 +9,10 @@ const CustomHeader: React.FC = () => {
   const [isSearchActive, setIsSearchActive] = React.useState(false);
 
   const handleSearchToggle = () => {
-    setIsSearchActive(!isSearchActive);
-    if (!isSearchActive) {
-      setSearchQuery('');
+    if (isSearchActive) {
+      setSearchQuery(''); // Clear search when closing
     }
+    setIsSearchActive(!isSearchActive); // Toggle search mode
   };
 
   return (
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF7B00',
   },
   logo: {
-    width: 50,  // Adjusted size for the logo
+    width: 50, // Adjusted size for the logo
     height: 50, // Adjusted size for the logo
     resizeMode: 'contain',
     marginRight: 16,

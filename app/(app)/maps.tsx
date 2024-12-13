@@ -4,6 +4,7 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import { useGlobalSearchParams } from 'expo-router';
 import { firestore, collection, getDocs } from '../../config/firebase';
 import OpenLocationButton from '../../src/OpenLocationButton';
+import { useSearch } from '../../providers/searchContext';
 
 interface MarkerData {
   id: string;
@@ -18,9 +19,11 @@ interface MarkerData {
 
 const MapScreen: React.FC = () => {
   const { id, latitude, longitude } = useGlobalSearchParams();
+  const { searchQuery } = useSearch();
   const [markerData, setMarkerData] = useState<MarkerData[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch markers from Firestore
   const fetchMarkersFromFirebase = async () => {
     try {
       const locationsCollection = collection(firestore, 'locations');
@@ -57,7 +60,14 @@ const MapScreen: React.FC = () => {
     );
   }
 
-  const filteredMarkers = id
+  // Filter markers by ID or search query
+  const filteredMarkers = searchQuery
+    ? markerData.filter(
+        (marker) =>
+          marker.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          marker.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : id
     ? markerData.filter((marker) => marker.id === id)
     : markerData;
 
@@ -84,7 +94,9 @@ const MapScreen: React.FC = () => {
                   style={styles.calloutImage}
                 />
                 <Text style={styles.calloutTitle}>{marker.title}</Text>
-                <Text style={styles.calloutDescription}>{marker.description}</Text>
+                <Text style={styles.calloutDescription}>
+                  {marker.description}
+                </Text>
 
                 <OpenLocationButton
                   title={marker.title}
