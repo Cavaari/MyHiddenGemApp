@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { getFirestore, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { useGlobalSearchParams } from 'expo-router';
+import { useGlobalSearchParams, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
 type Location = {
@@ -22,6 +22,7 @@ type Location = {
 
 const SelectCard: React.FC = () => {
   const { id } = useGlobalSearchParams();
+  const router = useRouter();
   const [location, setLocation] = useState<Location | null>(null);
   const [isFavourited, setIsFavourited] = useState<boolean>(false);
 
@@ -118,6 +119,18 @@ const SelectCard: React.FC = () => {
     );
   }
 
+  const handleNavigateToMap = () => {
+    router.push({
+      pathname: '/(app)/maps',
+      params: { 
+        id: location.id, 
+        title: location.title,
+        coordinates: location.coordinates,
+        imagePath: location.imagePath,
+      },
+    });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.imageContainer}>
@@ -158,6 +171,14 @@ const SelectCard: React.FC = () => {
         <Text style={styles.detailHeader}>Recommended Mode of Travel:</Text>
         <Text style={styles.detailText}>{location.recommendedModeOfTravel}</Text>
       </View>
+
+      <TouchableOpacity
+        style={styles.mapButton}
+        onPress={handleNavigateToMap}
+      >
+        <Text style={styles.mapButtonText}>View on Map</Text>
+      </TouchableOpacity>
+
     </ScrollView>
   );
 };
@@ -222,6 +243,18 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 14,
     color: '#666',
+  },
+  mapButton: {
+    backgroundColor: '#00BFFF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  mapButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

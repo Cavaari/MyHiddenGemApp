@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import MapView from 'react-native-maps';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, Text, Image } from 'react-native';
+import MapView, { Marker, Callout } from 'react-native-maps';
+import { useGlobalSearchParams } from 'expo-router';
 import { firestore, collection, getDocs } from '../../config/firebase';
-import Markers from '@/assets/markers';
-import { SearchContext } from '../../providers/searchContext'; 
+import OpenLocationButton from '../../src/OpenLocationButton';
 
 interface MarkerData {
   id: string;
@@ -16,13 +16,10 @@ interface MarkerData {
   imagePath: string;
 }
 
-const MapScreen = () => {
+const MapScreen: React.FC = () => {
+  const { id, latitude, longitude } = useGlobalSearchParams();
   const [markerData, setMarkerData] = useState<MarkerData[]>([]);
-  const [filteredMarkers, setFilteredMarkers] = useState<MarkerData[]>([]);
   const [loading, setLoading] = useState(true);
-  const searchContext = useContext(SearchContext);
-  const searchQuery = searchContext?.searchQuery || '';
-  const setSearchQuery = searchContext?.setSearchQuery || (() => {});
 
   const fetchMarkersFromFirebase = async () => {
     try {
@@ -41,7 +38,6 @@ const MapScreen = () => {
       }));
 
       setMarkerData(markers);
-      setFilteredMarkers(markers);
     } catch (error) {
       console.error('Error fetching markers:', error);
     } finally {
@@ -53,24 +49,6 @@ const MapScreen = () => {
     fetchMarkersFromFirebase();
   }, []);
 
-  // Filter markers dynamically
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      const filtered = markerData.filter((marker) =>
-        marker.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        marker.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredMarkers(filtered);
-    } else {
-      setFilteredMarkers(markerData);
-    }
-  }, [searchQuery, markerData]);
-
-  // Clear search on page leave
-  useEffect(() => {
-    return () => setSearchQuery(''); 
-  }, [setSearchQuery]);
-
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
@@ -79,23 +57,44 @@ const MapScreen = () => {
     );
   }
 
+  const filteredMarkers = id
+    ? markerData.filter((marker) => marker.id === id)
+    : markerData;
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 13.9094,
-          longitude: -60.9789,
-          latitudeDelta: 0.8,
-          longitudeDelta: 0.6,
+          latitude: latitude ? parseFloat(latitude as string) : 13.9094,
+          longitude: longitude ? parseFloat(longitude as string) : -60.9789,
+          latitudeDelta: 0.5,
+          longitudeDelta: 0.5,
         }}
         showsUserLocation
         showsMyLocationButton
         rotateEnabled={false}
-        maxDelta={0.5}
-        minDelta={0.001}
       >
-        <Markers markerData={filteredMarkers} />
+        {filteredMarkers.map((marker) => (
+          <Marker key={marker.id} coordinate={marker.coordinate}>
+            <Callout>
+              <View style={styles.calloutContainer}>
+                <Image
+                  source={{ uri: marker.imagePath }}
+                  style={styles.calloutImage}
+                />
+                <Text style={styles.calloutTitle}>{marker.title}</Text>
+                <Text style={styles.calloutDescription}>{marker.description}</Text>
+
+                <OpenLocationButton
+                  title={marker.title}
+                  latitude={marker.coordinate.latitude}
+                  longitude={marker.coordinate.longitude}
+                />
+              </View>
+            </Callout>
+          </Marker>
+        ))}
       </MapView>
     </View>
   );
@@ -112,6 +111,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  calloutContainer: {
+    width: 250,
+    padding: 8,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  calloutImage: {
+    width: '100%',
+    height: 120,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  calloutTitle: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  calloutDescription: {
+    fontSize: 14,
+    color: '#555',
+    textAlign: 'center',
   },
 });
 

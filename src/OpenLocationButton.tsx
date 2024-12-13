@@ -38,7 +38,7 @@ const OpenLocationButton: React.FC<OpenLocationButtonProps> = ({ title, latitude
 const styles = StyleSheet.create({
   button: {
     marginTop: 10,
-    backgroundColor: '#2375fa',
+    backgroundColor: '#00BFFF',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 6,

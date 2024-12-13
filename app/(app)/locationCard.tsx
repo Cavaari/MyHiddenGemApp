@@ -75,7 +75,7 @@ const LocationCard: React.FC<LocationCardProps> = ({
               try {
                 await deleteDoc(favDoc);
                 setIsFavourited(false);
-                Alert.alert('Removed', `${title} has been removed from your favourites.`);
+                // Alert.alert('Removed', `${title} has been removed from your favourites.`);
               } catch (error) {
                 console.error('Error removing favourite:', error);
               }
@@ -93,7 +93,7 @@ const LocationCard: React.FC<LocationCardProps> = ({
           imageUrl,
         });
         setIsFavourited(true);
-        Alert.alert('Added', `${title} has been added to your favourites.`);
+        // Alert.alert('Added', `${title} has been added to your favourites.`);
       } catch (error) {
         console.error('Error adding to favourites:', error);
       }
