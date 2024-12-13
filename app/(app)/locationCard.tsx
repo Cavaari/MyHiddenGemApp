@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // shadowRadius: 10,
     elevation: 5,
   },
   image: {

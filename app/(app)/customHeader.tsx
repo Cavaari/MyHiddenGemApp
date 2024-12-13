@@ -1,6 +1,5 @@
-// app/customHeader.tsx
 import React from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Image, Platform, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface CustomHeaderProps {
@@ -19,47 +18,64 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ setSearchQuery, searchQuery
   };
 
   const handleSearchInputChange = (text: string) => {
-    setSearchQuery(text); // Pass the input text to the setSearchQuery prop
+    setSearchQuery(text); // Update the search query
   };
 
   return (
-    <View style={styles.header}>
-      <Image source={require('../../assets/images/gem-logo.png')} style={styles.logo} />
-      {isSearchActive ? (
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchBar}
-            placeholder="Search..."
-            placeholderTextColor="#fff"
-            value={searchQuery}
-            onChangeText={handleSearchInputChange}
-            autoFocus
-          />
-          <TouchableOpacity style={styles.clearIcon} onPress={handleSearchToggle}>
-            <Icon name="times" style={styles.icon} />
-          </TouchableOpacity>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.header}>
+        <View style={styles.logoContainer}>
+          <Image source={require('../../assets/images/gem-logo.png')} style={styles.logo} />
         </View>
-      ) : (
-        <TouchableOpacity style={styles.iconContainer} onPress={handleSearchToggle}>
-          <Icon name="search" style={styles.icon} />
-        </TouchableOpacity>
-      )}
-    </View>
+
+        {isSearchActive ? (
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchBar}
+              placeholder="Search..."
+              placeholderTextColor="#fff"
+              value={searchQuery}
+              onChangeText={handleSearchInputChange}
+              autoFocus
+            />
+            <TouchableOpacity style={styles.clearIcon} onPress={handleSearchToggle}>
+              <Icon name="times" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity style={styles.iconContainer} onPress={handleSearchToggle}>
+            <Icon name="search" style={styles.icon} />
+          </TouchableOpacity>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 0,
+    backgroundColor: '#FF7B00',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingTop: Platform.OS === 'ios' ? 1 : 8, // Adjust for iOS notch
+    paddingBottom: 12,
+    paddingHorizontal: 16,
     backgroundColor: '#FF7B00',
   },
+  logoContainer: {
+    width: 45,  // Adjust the width to give more room for the logo
+    height: 45, // Adjust the height accordingly
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'visible',  // Change overflow to visible to avoid clipping
+  },
   logo: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
-    marginRight: 16,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',  // Keep the image proportionally scaled
   },
   iconContainer: {
     marginLeft: 'auto',
